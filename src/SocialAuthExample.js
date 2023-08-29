@@ -56,7 +56,7 @@ export default function App() {
     }
       initializeFunAccount({
         users: activeConnections.map((connection) => ({ userId: convertToValidUserId(connection.account) })),
-        index: 1234512345 //random number
+        index: parseInt(Math.random()*10000000) //random number
       }).catch()
   }
 
@@ -89,7 +89,7 @@ export default function App() {
       {
         activeConnections.length > 0 ?
           <div>
-            Success! Social Auth Connected!
+            Success! Social auth connected!
           </div>
           : <></>
       }
@@ -97,10 +97,10 @@ export default function App() {
       <br></br>
 
       2.&ensp;
-      <button onClick={initializeGroupAuthWallet}>Create group auth wallet</button>
+      <button onClick={initializeGroupAuthWallet}>Initialize FunWallet</button>
       {account ?
         <div>
-          Success! FunWallet Address: {account}
+          Success! FunWallet address: {account}
         </div>
         : <></>
       }
@@ -117,7 +117,7 @@ export default function App() {
       }
       {receiptTxId ?
         <div>
-          Success! View on <a href={`https://goerli.etherscan.io/address/${account}`} target="_blank" rel="noreferrer"> block explorer. </a>
+          <a href={`https://goerli.etherscan.io/tx/${receiptTxId}`} target="_blank" rel="noreferrer">Transaction submitted!</a> View wallet on <a href={`https://goerli.etherscan.io/address/${account}`} target="_blank" rel="noreferrer"> block explorer. </a>
         </div>
         : <></>
       }
