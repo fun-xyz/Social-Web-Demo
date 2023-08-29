@@ -50,13 +50,22 @@ export default function App() {
   }, [activeConnectors]);
 
   const initializeGroupAuthWallet = () => {
-    initializeFunAccount({
-      users: activeConnections.map((connection) => ({ userId: convertToValidUserId(connection.account) })),
-      index: 1234512345 //random number
-    }).catch()
+    if (activeConnections.length == 0) {
+      alert("No authentication methods are used. Please follow the steps.")
+      return
+    }
+      initializeFunAccount({
+        users: activeConnections.map((connection) => ({ userId: convertToValidUserId(connection.account) })),
+        index: 1234512345 //random number
+      }).catch()
   }
 
   const createWallet = async () => {
+    if (!funWallet) {
+      alert("FunWallet not initialized. Please follow the steps.")
+      return
+    }
+
     // Add your custom action code here!
     setLoading(true)
 
