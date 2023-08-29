@@ -10,7 +10,7 @@ import {
   Goerli,
   configureNewFunStore,
   usePrimaryAuth,
-} from "@fun-xyz/react";
+} from "@funkit/react";
 import { useMemo } from "react";
 import { useState } from "react";
 import SocialButton from "./components/SocialButton";
@@ -54,10 +54,10 @@ export default function App() {
       alert("No authentication methods are used. Please follow the steps.")
       return
     }
-      initializeFunAccount({
-        users: activeConnections.map((connection) => ({ userId: convertToValidUserId(connection.account) })),
-        index: parseInt(Math.random()*10000000) //random number
-      }).catch()
+    initializeFunAccount({
+      users: activeConnections.map((connection) => ({ userId: convertToValidUserId(connection.account) })),
+      index: parseInt(Math.random() * 10000000) //random number
+    }).catch()
   }
 
   const createWallet = async () => {
