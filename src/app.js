@@ -83,9 +83,10 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Create FunWallet with social authentication</h1> (Open in a new tab if using codesandbox)
+      <h1>Create FunWallet with social authentication</h1> 
       1.&ensp;
       <SocialButton></SocialButton>
+      (Open in a new tab if using codesandbox)
       {
         activeConnections.length > 0 ?
           <div>
