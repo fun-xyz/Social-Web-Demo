@@ -86,6 +86,7 @@ export default function App() {
       <h1>Create FunWallet with social authentication</h1> 
       1.&ensp;
       <SocialButton></SocialButton>
+      &ensp;
       (Open in a new tab if using codesandbox)
       {
         activeConnections.length > 0 ?
