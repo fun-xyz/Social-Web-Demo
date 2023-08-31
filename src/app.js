@@ -83,7 +83,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Create FunWallet with social authentication</h1>
+      <h1>Create FunWallet with social authentication</h1> (Open in a new tab if using codesandbox)
       1.&ensp;
       <SocialButton></SocialButton>
       {
