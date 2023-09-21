@@ -15,7 +15,7 @@ import { useMemo } from "react";
 import { useState } from "react";
 import SocialButton from "./components/SocialButton";
 
-//Step 1: Initialize the FunStore. This action configures your environment based on your apikey, chain, and the authentication methods of your choosing. 
+//Step 1: Initialize the FunStore. This action configures your environment based on your apikey, chain, and the authentication methods of your choosing.
 const DEFAULT_FUN_WALLET_CONFIG = {
   apiKey: "hnHevQR0y394nBprGrvNx4HgoZHUwMet5mXTOBhf",
   chain: Goerli,
@@ -83,7 +83,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>Create FunWallet with social authentication</h1> 
+      <h1>Create FunWallet with social authentication</h1>
       1.&ensp;
       <SocialButton></SocialButton>
       &ensp;
