@@ -11,9 +11,7 @@ import {
   configureNewFunStore,
   usePrimaryAuth,
 } from "@funkit/react";
-import { useMemo } from "react";
-import { useState } from "react";
-import SocialButton from "./components/SocialButton";
+import { useState, useMemo, useCallback } from "react";
 
 //Step 1: Initialize the FunStore. This action configures your environment based on your apikey, chain, and the authentication methods of your choosing.
 const DEFAULT_FUN_WALLET_CONFIG = {
@@ -34,11 +32,8 @@ configureNewFunStore({
   connectors: DEFAULT_CONNECTORS,
 });
 
-window.Buffer = window.Buffer || require("buffer").Buffer;
-
-export default function App() {
+const useFunDemo = () => {
   const [receiptTxId, setReceiptTxId] = useState("");
-  const [loading, setLoading] = useState(false);
 
   //Step 2: Use the initializeFunAccount method to create your funWallet object
   const { activeConnectors: allConnectors } = useConnectors();
@@ -49,8 +44,8 @@ export default function App() {
     return allConnectors.filter((connector) => connector.active);
   }, [allConnectors]);
 
-  const initializeGroupAuthWallet = () => {
-    if (activeConnectors.length == 0) {
+  const initializeGroupAuthWallet = useCallback(() => {
+    if (activeConnectors.length === 0) {
       alert("No authentication methods are used. Please follow the steps.");
       return;
     }
@@ -60,16 +55,15 @@ export default function App() {
       })),
       index: parseInt(Math.random() * 10000000), //random number
     }).catch();
-  };
+  }, [initializeFunAccount, activeConnectors]);
 
-  const createWallet = async () => {
+  const createWallet = useCallback(async () => {
     if (!funWallet) {
       alert("FunWallet not initialized. Please follow the steps.");
       return;
     }
 
     // Add your custom action code here!
-    setLoading(true);
 
     //Step 3: Create the operation
     const op = await funWallet.create(auth, await auth.getAddress());
@@ -78,56 +72,11 @@ export default function App() {
 
     const receipt = await funWallet.executeOperation(auth, op);
     setReceiptTxId(receipt.txId);
-    setLoading(false);
 
     // FINAL STEP: Add your custom action logic here (swap, transfer, etc)
-  };
+  }, [funWallet, setReceiptTxId, auth]);
 
-  return (
-    <div className="App">
-      <h1>Create FunWallet with social authentication</h1>
-      1.&ensp;
-      <SocialButton></SocialButton>
-      &ensp; (Open in a new tab if using codesandbox)
-      {activeConnectors.length > 0 ? (
-        <div>Success! Social auth connected!</div>
-      ) : (
-        <></>
-      )}
-      <br></br>
-      <br></br>
-      2.&ensp;
-      <button onClick={initializeGroupAuthWallet}>Initialize FunWallet</button>
-      {account ? <div>Success! FunWallet address: {account}</div> : <></>}
-      <br></br>
-      <br></br>
-      3.&ensp;
-      <button onClick={createWallet}>Create FunWallet</button>
-      {loading ? <div>Loading...</div> : <></>}
-      {receiptTxId ? (
-        <div>
-          <a
-            href={`https://goerli.etherscan.io/tx/${receiptTxId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Transaction submitted!
-          </a>{" "}
-          View wallet on{" "}
-          <a
-            href={`https://goerli.etherscan.io/address/${account}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {" "}
-            block explorer.{" "}
-          </a>
-        </div>
-      ) : (
-        <></>
-      )}
-      <br></br>
-      <br></br>
-    </div>
-  );
-}
+  return { initializeGroupAuthWallet, createWallet, receiptTxId, account };
+};
+
+export default useFunDemo;
