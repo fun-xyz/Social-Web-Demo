@@ -9,7 +9,6 @@ It demonstrates how to connect the auth provider and than initialize the Fun Wal
 
 First, run the development server:
 
-
 ```bash
 npm run dev
 # or
